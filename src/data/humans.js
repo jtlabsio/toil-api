@@ -47,24 +47,24 @@ export default async (app, self = {}) => {
 			human,
 			query = {
 				humanId : options.humanId,
-				username : options.username
+				email : options.email
 			},
 			startTime = new Date();
 
 		// ensure we fields to retrieve by
 		if (!Object.keys.length(query)) {
-			throw new Error('data.humans.retrieve: humanId or username are required');
+			throw new Error('data.humans.retrieve: humanId or email are required');
 		}
 
 		app.log.trace(
 			'data.humans.retrieve: finding human %s',
-			query.humanId || query.username);
+			query.humanId || query.email);
 
 		human = await Human.findOne(query);
 
 		app.log.debug(
 			'data.humans.retrieve: found human %s%s in %s',
-			query.humanId || query.username,
+			query.humanId || query.email,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));
 
 		return human.toObject();
@@ -79,11 +79,14 @@ export default async (app, self = {}) => {
 			'data.humans.search: searching for humans');
 
 		result = await Human
-			.find({}, null, { lean : true })
+			.find({}, { _id : 0, __v : 0 }, { lean : true })
 			.field(options)
 			.filter(options)
 			.order(options)
 			.page(options);
+
+		// convert each mongoose document to an object
+		// result.results = result.results.map((result) => result.toObject());
 
 		app.log.debug(
 			'data.humans.update: found %d humans in %s',
@@ -98,13 +101,13 @@ export default async (app, self = {}) => {
 			human,
 			query = {
 				humanId : options.humanId,
-				username : options.username
+				email : options.email
 			},
 			startTime = new Date();
 
 		app.log.trace(
 			'data.humans.update: updating human %s',
-			query.humanId || query.username);
+			query.humanId || query.email);
 
 		human = await Human.updateOne(query, data, {
 			upsert : true
@@ -112,7 +115,7 @@ export default async (app, self = {}) => {
 
 		app.log.debug(
 			'data.humans.update: updated human %s%s in %s',
-			query.humanId || query.username,
+			query.humanId || query.email,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));
 
 		return human.toObject();

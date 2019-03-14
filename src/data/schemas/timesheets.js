@@ -80,9 +80,7 @@ const TimesheetSchema = new Schema({
 		type : String
 	}
 }, {
-	_id : false,
-	useNestedStrict : true,
-	versionKey : true
+	useNestedStrict : true
 })
 
 plugins.timestamps(TimesheetSchema);

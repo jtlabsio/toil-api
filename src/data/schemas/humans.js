@@ -18,6 +18,14 @@ const HumanSchema = new Schema({
 		required : true,
 		type : Boolean
 	},
+	email : {
+		default : false,
+		index : {
+			unique : true
+		},
+		required : true,
+		type : String
+	},
 	fullname : {
 		required : false,
 		type : String
@@ -28,18 +36,9 @@ const HumanSchema = new Schema({
 		},
 		required : true,
 		type : String
-	},
-	username : {
-		index : {
-			unique : true
-		},
-		required : true,
-		type : String
 	}
 }, {
-	_id : false,
-	useNestedStrict : true,
-	versionKey : true
+	useNestedStrict : true
 })
 
 plugins.timestamps(HumanSchema);

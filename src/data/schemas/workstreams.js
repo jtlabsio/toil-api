@@ -28,9 +28,7 @@ const WorkstreamSchema = new Schema({
 		type : String
 	}
 }, {
-	_id : false,
-	useNestedStrict : true,
-	versionKey : false
+	useNestedStrict : true
 })
 
 plugins.timestamps(WorkstreamSchema);

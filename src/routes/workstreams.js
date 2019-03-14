@@ -4,6 +4,8 @@ import Router from 'koa-router';
 export default async (app, models, status, self = {}) => {
 	let router = new Router();
 
+	app.log.trace('routes.workstreams: registering routes for /v1/workstreams');
+
 	router.delete('/v1/workstreams/:workstreamId', async () => {
 		throw Boom.notImplemented('Delete workstream not yet implemented');
 	});

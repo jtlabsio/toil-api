@@ -4,6 +4,8 @@ import Router from 'koa-router';
 export default async (app, models, status, self = {}) => {
 	let router = new Router();
 
+	app.log.trace('routes.accounts: registering routes for /v1/accounts');
+
 	router.delete('/v1/humans/:humanId', async () => {
 		throw Boom.notImplemented('Delete human not yet implemented');
 	});

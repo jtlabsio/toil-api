@@ -30,8 +30,10 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "mongoose": "^5.4.18",
-    "mongoose-middleware": "^1.0.0",
-    "settings-lib": "^1.1.1"
+    "mongoose-middleware": "^2.0.0",
+    "settings-lib": "^1.1.1",
+    "source-map-support": "^0.5.11",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

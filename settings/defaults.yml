@@ -3,6 +3,7 @@ data:
     maxDocs : 1000
   options:
     autoIndex: true
+    useCreateIndex : true
     useNewUrlParser: true
   url: mongodb://localhost:27017/toil
 logging:

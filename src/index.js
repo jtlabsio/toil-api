@@ -5,6 +5,8 @@ import initRoutes from './routes';
 import Koa from 'koa';
 import settings from 'settings-lib';
 
+import 'source-map-support/register';
+
 const
 	DEFAULT_APP_NAME = 'human-api',
 	DEFAULT_SETTINGS_PATH = 'settings/defaults.yml';

@@ -4,6 +4,8 @@ import Router from 'koa-router';
 export default async (app, models, status, self = {}) => {
 	let router = new Router();
 
+	app.log.trace('routes.timesheets: registering routes for /v1/timesheets');
+
 	router.delete('/v1/timesheets/:timesheetId', async () => {
 		throw Boom.notImplemented('Delete timesheet not yet implemented');
 	});
