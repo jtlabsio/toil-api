@@ -1,0 +1,9 @@
+.DS_Store
+/.nyc_output/
+/dist/
+/node_modules/
+/npm-debug.log
+/reports/
+/settings/*.json
+!/settings/defaults.json
+/test/sandbox

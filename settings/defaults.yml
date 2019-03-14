@@ -1,0 +1,12 @@
+data:
+  middleware:
+    maxDocs : 1000
+  options:
+    autoIndex: true
+    useNewUrlParser: true
+  url: mongodb://localhost:27017/toil
+logging:
+  level: info
+server:
+  port: 3080
+  secure: false
