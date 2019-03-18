@@ -8,8 +8,8 @@ const
 		filter : ['_id']
 	},
 	DEFAULT_PROJECTION = {
-		_id : 0,
-		__v : 0
+		__v : 0,
+		_id : 0
 	},
 	DEFAULT_SEARCH_OPTIONS = {
 		lean : true

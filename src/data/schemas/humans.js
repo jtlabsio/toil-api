@@ -2,6 +2,17 @@ import * as plugins from './plugins';
 import { Schema } from 'mongoose';
 
 const HumanSchema = new Schema({
+	accounts : [{
+		accountId : {
+			index : true,
+			required : true,
+			type : String
+		},
+		claims : {
+			required : false,
+			type : String
+		}
+	}],
 	attributes : [{
 		key : {
 			required : false,

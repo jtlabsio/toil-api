@@ -1,4 +1,3 @@
-import Boom from 'boom';
 import Router from 'koa-router';
 
 const DEFAULT_SUCCESS_STATUS = 200;

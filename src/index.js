@@ -1,11 +1,11 @@
+import 'source-map-support/register';
+
 import bunyan from 'bunyan';
 import initData from './data';
 import initModels from './models';
 import initRoutes from './routes';
 import Koa from 'koa';
 import settings from 'settings-lib';
-
-import 'source-map-support/register';
 
 const
 	DEFAULT_APP_NAME = 'human-api',

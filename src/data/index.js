@@ -1,3 +1,4 @@
+import accounts from './accounts';
 import humans from './humans';
 import mongoose from 'mongoose';
 import mongooseMiddleware from 'mongoose-middleware';
@@ -42,6 +43,8 @@ export default async (app, self = {}) => {
 		log : app.log
 	};
 
+	// initialize and reference each data mapper
+	self.accounts = await accounts(app, request);
 	self.humans = await humans(app, request);
 
 	self.setRequestLog = (log) => {

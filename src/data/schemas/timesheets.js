@@ -46,12 +46,12 @@ const TimesheetSchema = new Schema({
 		}
 	}],
 	human : {
-		id : {
+		email : {
 			index : true,
 			required : true,
 			type : String
 		},
-		email : {
+		humanId : {
 			index : true,
 			required : true,
 			type : String

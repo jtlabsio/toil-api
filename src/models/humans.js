@@ -8,6 +8,8 @@ const
 	RE_KEY_HUMAN_ID = /^[^:]*$|^humanid:/i;
 
 export default function (app, request, data, self = {}) {
+	app.log.trace('models.humans: initializing business layer for humans');
+
 	self.create = async (human, index = 0) => {
 		if (!human) {
 			throw boom.badRequest(`index (${ index }): data is required to create a human`);
@@ -18,6 +20,7 @@ export default function (app, request, data, self = {}) {
 			let result = [];
 
 			// create each human provided in order...
+			/* eslint no-await-in-loop : 0 */
 			for (let element of human) {
 				element = await self.create(element, result.length);
 				result.push(element);
@@ -63,7 +66,7 @@ export default function (app, request, data, self = {}) {
 
 	self.lookup = async (key) => {
 		if (!key) {
-			throw boom.badRequest(`email address or humanId is required to lookup a human`);
+			throw boom.badRequest('email address or humanId is required to lookup a human');
 		}
 
 		request.log.trace(
@@ -125,11 +128,11 @@ export default function (app, request, data, self = {}) {
 
 	self.update = async (key, human) => {
 		if (!human) {
-			throw boom.badRequest(`data is required to update a human`);
+			throw boom.badRequest('data is required to update a human');
 		}
 
 		if (!key) {
-			throw boom.badRequest(`email address or humanId is required to update a human`);
+			throw boom.badRequest('email address or humanId is required to update a human');
 		}
 
 		request.log.trace(
@@ -178,6 +181,7 @@ export default function (app, request, data, self = {}) {
 			let result = [];
 
 			// create each human provided in order...
+			/* eslint no-await-in-loop : 0 */
 			for (let element of human) {
 				element = await self.upsert(element, result.length);
 				result.push(element);
