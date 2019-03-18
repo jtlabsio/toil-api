@@ -1,3 +1,3 @@
-# human-api
+# toil-api
 
 Under development
