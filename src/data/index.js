@@ -3,6 +3,7 @@ import humans from './humans';
 import mongoose from 'mongoose';
 import mongooseMiddleware from 'mongoose-middleware';
 import tasks from './tasks';
+import timesheets from './timesheets';
 
 async function connectToDatabase (app) {
 	if (mongoose.connection.readyState) {
@@ -48,6 +49,7 @@ export default async (app, self = {}) => {
 	self.accounts = await accounts(app, request);
 	self.humans = await humans(app, request);
 	self.tasks = await tasks(app, request);
+	self.timesheets = await timesheets(app, request);
 
 	self.setRequestLog = (log) => {
 		request.log = log;

@@ -69,6 +69,8 @@ const TimesheetSchema = new Schema({
 		}
 	},
 	submitted : {
+		default : false,
+		index : true,
 		required : false,
 		type : Date
 	},

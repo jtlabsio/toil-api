@@ -41,6 +41,11 @@ export default async (app, request, self = {}) => {
 			human,
 			startTime = new Date();
 
+		// ensure we fields to delete by
+		if (!Object.keys(options).length) {
+			throw new Error('data.humans.delete: humanId or email is required');
+		}
+
 		request.log.trace(
 			'data.humans.delete: deleting human %s',
 			options.humanId || options.email);
@@ -108,7 +113,7 @@ export default async (app, request, self = {}) => {
 			human,
 			startTime = new Date();
 
-		// ensure we fields to retrieve by
+		// ensure we fields to update by
 		if (!Object.keys(options).length) {
 			throw new Error('data.humans.update: humanId or email is required');
 		}

@@ -41,6 +41,11 @@ export default async (app, request, self = {}) => {
 			account,
 			startTime = new Date();
 
+		// ensure we fields to delete by
+		if (!Object.keys(options).length) {
+			throw new Error('data.accounts.delete: accountId or name is required');
+		}
+
 		request.log.trace(
 			'data.accounts.delete: deleting account %s',
 			options.accountId || options.name);
@@ -108,7 +113,7 @@ export default async (app, request, self = {}) => {
 			account,
 			startTime = new Date();
 
-		// ensure we fields to retrieve by
+		// ensure we fields to update by
 		if (!Object.keys(options).length) {
 			throw new Error('data.accounts.update: accountId or name is required');
 		}

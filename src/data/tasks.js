@@ -41,6 +41,11 @@ export default async (app, request, self = {}) => {
 			startTime = new Date(),
 			task;
 
+		// ensure we fields to delete by
+		if (!Object.keys(options).length) {
+			throw new Error('data.tasks.delete: taskId or name is required');
+		}
+
 		request.log.trace(
 			'data.tasks.delete: deleting task %s',
 			options.taskId || options.name);
@@ -108,7 +113,7 @@ export default async (app, request, self = {}) => {
 			startTime = new Date(),
 			task;
 
-		// ensure we fields to retrieve by
+		// ensure we fields to update by
 		if (!Object.keys(options).length) {
 			throw new Error('data.tasks.update: taskId or name is required');
 		}
