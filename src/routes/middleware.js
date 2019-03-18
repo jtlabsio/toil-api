@@ -3,6 +3,7 @@ import cors from 'kcors';
 import countdown from 'countdown';
 import parser from 'koa-bodyparser';
 import qs from 'qs';
+import { v4 } from 'uuid';
 
 const
 	BASE_TEN = 10,
@@ -11,13 +12,19 @@ const
 	DEFAULT_STATUS_CODE_LOG_LEVEL = 499,
 	DEFAULT_UNCAUGHT_ERROR_STATUS_CODE = 500;
 
-export default (app, self = {}) => {
+export default (app, models, self = {}) => {
 	// middleware for request logging
 	app.use(async (ctx, next) => {
 		let
+			correlationId = ctx.get('X-Correlation-Id') || ctx.get('x-correlation-id') || v4(),
 			duration,
+			log,
 			requestPrefix = `${ctx.method} ${ctx.path}`,
 			requestStart = new Date();
+
+		// assign an ID to the request and create a child logger
+		log = app.log.child({ correlationId });
+		models.setRequestLog(log);
 
 		// await routing
 		app.log.trace(requestPrefix);
@@ -27,8 +34,9 @@ export default (app, self = {}) => {
 		duration = countdown(requestStart, new Date(), countdown.MILLISECONDS);
 
 		// set response header and log...
+		ctx.set('X-Correlation-Id', correlationId);
 		ctx.set('X-Response-Time', duration.toString());
-		app.log.debug(
+		log.debug(
 			'%s %s- duration %s',
 			requestPrefix,
 			ctx.clientId ? `(clientId: ${ctx.clientId}) ` : '',

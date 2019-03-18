@@ -38,7 +38,15 @@ export default async (app, self = {}) => {
 		},
 		mongoose);
 
-	self.humans = await humans(app);
+	let request = {
+		log : app.log
+	};
+
+	self.humans = await humans(app, request);
+
+	self.setRequestLog = (log) => {
+		request.log = log;
+	};
 
 	return self;
 };

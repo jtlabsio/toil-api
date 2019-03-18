@@ -16,7 +16,7 @@ const
 	},
 	Human = mongoose.model('Human', humanSchema);
 
-export default async (app, self = {}) => {
+export default async (app, request, self = {}) => {
 	app.log.trace('data.humans: initializing data mapper for humans');
 
 	self.create = async (data) => {
@@ -24,11 +24,11 @@ export default async (app, self = {}) => {
 			human = new Human(data),
 			startTime = new Date();
 
-		app.log.trace('data.humans.create: creating human %s', human.humanId);
+		request.log.trace('data.humans.create: creating human %s', human.humanId);
 
 		await human.save();
 
-		app.log.debug(
+		request.log.debug(
 			'data.humans.create: created human %s in %s',
 			human.humanId,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));
@@ -36,21 +36,23 @@ export default async (app, self = {}) => {
 		return human.toObject(DEFAULT_OBJECT_FILTER);
 	};
 
-	self.delete = async (humanId) => {
+	self.delete = async (options) => {
 		let
-			result,
+			human,
 			startTime = new Date();
 
-		app.log.trace('data.humans.delete: deleting human %s', humanId);
+		request.log.trace(
+			'data.humans.delete: deleting human %s',
+			options.humanId || options.email);
 
-		result = await Human.deleteOne({ humanId });
+		human = await Human.findOneAndDelete(options);
 
-		app.log.debug(
+		request.log.debug(
 			'data.humans.delete: deleted human %s in %s',
-			humanId,
+			options.humanId || options.email,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));
 
-		return result;
+		return human.toObject(DEFAULT_OBJECT_FILTER);
 	};
 
 	self.retrieve = async (options) => {
@@ -63,14 +65,15 @@ export default async (app, self = {}) => {
 			throw new Error('data.humans.retrieve: humanId or email is required');
 		}
 
-		app.log.trace(
+		request.log.trace(
 			'data.humans.retrieve: finding human %s',
 			options.humanId || options.email);
 
 		human = await Human.findOne(options, DEFAULT_PROJECTION, DEFAULT_SEARCH_OPTIONS);
 
-		app.log.debug(
-			'data.humans.retrieve: found human %s in %s',
+		request.log.debug(
+			'data.humans.retrieve: %s human %s in %s',
+			human ? 'found' : 'unable to find',
 			options.humanId || options.email,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));
 
@@ -82,7 +85,7 @@ export default async (app, self = {}) => {
 			result,
 			startTime = new Date();
 
-		app.log.trace(
+		request.log.trace(
 			'data.humans.search: searching for humans');
 
 		result = await Human
@@ -92,7 +95,7 @@ export default async (app, self = {}) => {
 			.order(options)
 			.page(options);
 
-		app.log.debug(
+		request.log.debug(
 			'data.humans.update: found %d humans in %s',
 			result.total,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));
@@ -110,7 +113,7 @@ export default async (app, self = {}) => {
 			throw new Error('data.humans.update: humanId or email is required');
 		}
 
-		app.log.trace(
+		request.log.trace(
 			'data.humans.update: updating human %s',
 			options.humanId || options.email);
 
@@ -122,7 +125,7 @@ export default async (app, self = {}) => {
 				rawRresult : true
 			});
 
-		app.log.debug(
+		request.log.debug(
 			'data.humans.update: updated human %s in %s',
 			options.humanId || options.email,
 			countdown(startTime, new Date(), countdown.MILLISECONDS));

@@ -5,14 +5,6 @@ import Router from 'koa-router';
 import status from './status';
 import version from './version';
 
-const HTTP_STATUS = {
-	Accepted : 202,
-	Created : 201,
-	NoContent : 204,
-	NotFound : 404,
-	Ok : 200
-};
-
 export default async (app, models, self = {}) => {
 	let options = new Router();
 
@@ -27,10 +19,10 @@ export default async (app, models, self = {}) => {
 	app.log.info('routes: initializing routing layer');
 
 	// register middleware
-	middleware(app);
+	middleware(app, models);
 
 	// register API routes
-	self.humans = humans(app, models, HTTP_STATUS);
+	self.humans = humans(app, models);
 	self.status = status(app, models);
 	self.version = version(app, models);
 

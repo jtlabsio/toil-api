@@ -1,6 +1,8 @@
 import Boom from 'boom';
 import Router from 'koa-router';
 
+const DEFAULT_SUCCESS_STATUS = 200;
+
 export default async (app, models, status, self = {}) => {
 	let router = new Router();
 
@@ -8,31 +10,32 @@ export default async (app, models, status, self = {}) => {
 
 	router.delete('/v1/humans/:key', async (ctx) => {
 		ctx.body = await models.humans.delete(ctx.params.key);
-		ctx.status = 200;
+		ctx.status = DEFAULT_SUCCESS_STATUS;
 	});
 
 	router.get('/v1/humans', async (ctx) => {
 		ctx.body = await models.humans.search(ctx.request.queryOptions);
-		ctx.status = 200;
+		ctx.status = DEFAULT_SUCCESS_STATUS;
 	});
 
 	router.get('/v1/humans/:key', async (ctx) => {
 		ctx.body = await models.humans.lookup(ctx.params.key);
-		ctx.status = 200;
+		ctx.status = DEFAULT_SUCCESS_STATUS;
 	});
 
 	router.post('/v1/humans', async (ctx) => {
 		ctx.body = await models.humans.create(ctx.request.body);
-		ctx.status = 200;
+		ctx.status = DEFAULT_SUCCESS_STATUS;
 	});
 
-	router.put('/v1/humans', async () => {
-		throw Boom.notImplemented('Upsert humans not yet implemented');
+	router.put('/v1/humans', async (ctx) => {
+		ctx.body = await models.humans.upsert(ctx.request.body);
+		ctx.status = DEFAULT_SUCCESS_STATUS;
 	});
 
 	router.put('/v1/humans/:key', async (ctx) => {
 		ctx.body = await models.humans.update(ctx.params.key, ctx.request.body);
-		ctx.status = 200;
+		ctx.status = DEFAULT_SUCCESS_STATUS;
 	});
 
 	app.use(router.routes());

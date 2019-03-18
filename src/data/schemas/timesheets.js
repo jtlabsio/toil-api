@@ -51,7 +51,7 @@ const TimesheetSchema = new Schema({
 			required : true,
 			type : String
 		},
-		username : {
+		email : {
 			index : true,
 			required : true,
 			type : String

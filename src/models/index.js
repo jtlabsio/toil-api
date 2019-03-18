@@ -11,7 +11,16 @@ export default async (app, data, self = {}) => {
 
 	app.log.info('models: initializing model layer');
 
-	self.humans = humans(app, data);
+	let request = {
+		log : app.log
+	};
+
+	self.humans = humans(app, request, data);
+
+	self.setRequestLog = (log) => {
+		request.log = log;
+		data.setRequestLog(log);
+	};
 
 	return self;
 };
