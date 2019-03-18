@@ -2,6 +2,7 @@ import accounts from './accounts';
 import humans from './humans';
 import mongoose from 'mongoose';
 import mongooseMiddleware from 'mongoose-middleware';
+import tasks from './tasks';
 
 async function connectToDatabase (app) {
 	if (mongoose.connection.readyState) {
@@ -46,6 +47,7 @@ export default async (app, self = {}) => {
 	// initialize and reference each data mapper
 	self.accounts = await accounts(app, request);
 	self.humans = await humans(app, request);
+	self.tasks = await tasks(app, request);
 
 	self.setRequestLog = (log) => {
 		request.log = log;
