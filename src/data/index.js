@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import mongooseMiddleware from 'mongoose-middleware';
 import tasks from './tasks';
 import timesheets from './timesheets';
+import workstreams from './workstreams';
 
 async function connectToDatabase (app) {
 	if (mongoose.connection.readyState) {
@@ -50,6 +51,7 @@ export default async (app, self = {}) => {
 	self.humans = await humans(app, request);
 	self.tasks = await tasks(app, request);
 	self.timesheets = await timesheets(app, request);
+	self.workstreams = await workstreams(app, request);
 
 	self.setRequestLog = (log) => {
 		request.log = log;
