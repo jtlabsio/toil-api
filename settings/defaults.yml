@@ -6,6 +6,7 @@ data:
     useCreateIndex: true
     useFindAndModify: false
     useNewUrlParser: true
+    useUnifiedTopology: true
   url: mongodb://localhost:27017/toil
 logging:
   level: info
