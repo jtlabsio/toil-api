@@ -17,6 +17,12 @@ Recommend using a package management tool (i.e. homebrew) or using n (<https://g
 
 ##### Docker
 
+Note: the following command is an example. Consider mapping a volume to store the mongo data locally.
+
+```bash
+docker run --name mongodb -d mongo:4.4 -p 27017:27017
+```
+
 ##### Multipass / Ubuntu VM
 
 ```bash
