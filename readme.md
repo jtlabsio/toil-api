@@ -48,7 +48,7 @@ sudo systemctl start mongod.service
 sudo systemctl enable mongod
 ```
 
-#### API
+#### Toil-API
 
 ##### Clone and Install Dependencies
 
@@ -83,6 +83,8 @@ logging:
 
 ##### Run the Microservice
 
+Use the `NODE_ENV` environment variable to specify an environment configuration override file (this will load the changes you made in `local.yml`):
+
 ```bash
-npm start
+NODE_ENV=local npm start
 ```
