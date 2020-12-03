@@ -33,14 +33,50 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb
 # install MongoDB
 sudo apt install mongodb-org
 
+# update /etc/mongod.conf to expose Mongo from VM
+# find bindIp: 127.0.0.1 and change to bindIp: 0.0.0.0
+sudo vi /etc/mongod.conf
+
 # start mongod
 sudo systemctl start mongod.service
 sudo systemctl enable mongod
 ```
 
+#### API
+
+##### Clone and Install Dependencies
+
 ```bash
 git clone https://github.com/jtlabsio/toil-api.git
 cd toil-api
 npm i
+```
+
+##### Configure
+
+Create a `local.yml` file in the `./settings` folder:
+
+```bash
+touch settings/local.yml
+```
+
+Now, get the IP of the mongodb instance (run the following command and look for IPv4 value):
+
+```bash
+multipass info mongodb1
+```
+
+Finally, modify the `local.yml` to point to the mongodb instance... see my example below (note the IP of `192.168.64.8` is from my local machine and will be different for your install):
+
+```yaml
+data:
+  url: mongodb://192.168.64.8:27017/toil
+logging:
+  level: trace
+```
+
+##### Run the Microservice
+
+```bash
 npm start
 ```
