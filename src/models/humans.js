@@ -96,6 +96,10 @@ export default function (app, request, data, self = {}) {
 			throw ex;
 		}
 
+		if (!human) {
+			throw boom.notFound(`human "${key}" not found`);
+		}
+
 		request.log.debug(
 			'models.humans.lookup: completed lookup human %s in %s',
 			options.humanId || options.email,
